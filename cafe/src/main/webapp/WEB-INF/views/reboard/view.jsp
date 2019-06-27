@@ -23,7 +23,48 @@ $(document).ready(function(){
 		
 	});
 	
+	// 최신 목록 보기 이벤트 (1페이지)
+	$(".firstListBtn").click(function(){
+		$("#bcode").val("${bcode}");
+		$("#pg").val("1");
+		$("#key").val("");
+		$("#word").val("");
+		
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/reboard/list").submit();
+	});
 	
+	// 목록 보기 이벤트 (보고있던 페이지)
+	$(".listBtn").click(function(){
+		$("#bcode").val("${bcode}");
+		$("#pg").val("${pg}");
+		$("#key").val("${key}");
+		$("#word").val("${word}");
+		
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/reboard/list").submit();
+	});
+	
+	// TODO: 수정, 삭제 해보기####################################################
+	// 내 글 수정 페이지로 이동
+	$(".moveModifyBtn").click(function(){
+		$("#bcode").val("${bcode}");
+		$("#pg").val("1");
+		$("#key").val("");
+		$("#word").val("");
+		
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/reboard/list").submit();
+	});
+	
+	// 내 글 삭제 이벤트
+	$(".moveDeleteBtn").click(function(){
+		$("#bcode").val("${bcode}");
+		$("#pg").val("${pg}");
+		$("#key").val("${key}");
+		$("#word").val("${word}");
+		
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/reboard/list").submit();
+	});
+	// TODO: 수정, 삭제 해보기####################################################
+
 });
 
 </script>
@@ -56,12 +97,20 @@ $(document).ready(function(){
 			src="${root}/img/board/btn_reply.gif" class="moveReplyBtn"
 			width="40" height="22"
 			border="0" align="absmiddle" alt="답글">
+	<c:if test="${userInfo.id == article.id}">
+		<img
+			src="${root}/img/board/btn_modify.gif" class="moveModifyBtn"
+			border="0" align="absmiddle" alt="글수정">
+		<img
+			src="${root}/img/board/btn_delete.gif" class="moveDeleteBtn"
+			border="0" align="absmiddle" alt="글삭제">
+	</c:if>
 		</td>
 		
 		<td valign="bottom" width="100%" style="padding-left: 4px"></td>
-		<td align="right" nowrap valign="bottom"><a
-			href="javascript:goPage(1);">최신목록</a> <font color="#c5c5c5">|</font>
-		<a href="javascript:goPage();">목록</a> <font color="#c5c5c5">|</font>
+		<td align="right" nowrap valign="bottom">
+		<label class="firstListBtn">최신목록</label> <font color="#c5c5c5">|</font>
+		<label class="listBtn">목록</label> <font color="#c5c5c5">|</font>
 
 		<a href="javascript:goBbsRead();"><img
 			src="${root}/img/board/icon_up.gif" border="0" align="absmiddle"
@@ -150,8 +199,10 @@ $(document).ready(function(){
 			target="new"><img src="${root}/img/board/btn_print.gif"
 			width="30" height="18" border="0" align="absmiddle" alt="인쇄"></a></td>
 
-		<td align="right" nowrap><a href="javascript:goPage(1);">최신목록</a>
-		<font color="#c5c5c5">|</font> <a href="javascript:goPage();">목록</a>
+		<td align="right" nowrap>
+		<label class="firstListBtn">최신목록</label>
+		<font color="#c5c5c5">|</font>
+		<label class="listBtn">목록</label>
 		<font color="#c5c5c5">|</font> <a href="javascript:goBbsRead();"><img
 			src="${root}/img/board/icon_up.gif" border="0" align="absmiddle"
 			hspace="3">윗글</a> <font color="#c5c5c5">|</font> <a

@@ -36,6 +36,14 @@
                         from board b, reboard r
                         where b.seq = r.seq
                         and b.bcode=#{bcode}
+                        <if test="word != null and word != ''">
+                        	<if test="key == 'subject'">
+                        		and b.subject like '%'||#{word}||'%' 
+                        	</if>
+                        	<if test="key != 'subject'">
+                        		and b.${key} = #{word} 
+                        	</if>
+                        </if>
                         order by seq desc
                       ) total
             	where rownum &lt;= #{end} 

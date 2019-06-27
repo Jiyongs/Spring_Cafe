@@ -11,4 +11,31 @@
 		from dual
 	</select>
 
+	<update id="updateHit" parameterType="int">
+		update board
+		set hit = hit + 1
+		where seq = #{seq}
+	</update>
+	
+	<select id="getNewArticleCount" parameterType="int" resultType="int">
+		select count(seq)
+		from board
+		where bcode = #{bcode}
+		and to_char(logtime, 'yymmdd') = to_char(sysdate, 'yymmdd')
+	</select>
+
+	<select id="getTotalArticleCount" parameterType="map" resultType="int">
+		select count(seq)
+		from board
+		where bcode = #{bcode}
+		<if test="word != null and word != ''">
+            <if test="key == 'subject'">
+               and subject like '%'||#{word}||'%' 
+            </if>
+        <if test="key != 'subject'">
+          and ${key} = #{word}
+        </if>
+       </if>
+	</select>
+	
 </mapper>
