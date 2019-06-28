@@ -22,4 +22,10 @@ public interface ReboardDao {
 	// 글 삭제 | 인자 : 글 번호
 	void deleteArticle(int seq);
 
+	// ---------------------------------------------------------------
+	// [답글]
+	void updateStep(ReboardDto reboardDto);
+	int replyArticle(ReboardDto reboardDto);
+	void updateReply(int pseq);
+	
 }

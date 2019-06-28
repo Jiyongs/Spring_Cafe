@@ -21,7 +21,8 @@ public class ReboardServiceImpl implements ReboardService{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	
+
+	// [일반 게시판]
 	@Override
 	public int writeArticle(ReboardDto reboardDto) {
 		int cnt = sqlSession.getMapper(ReboardDao.class).writeArticle(reboardDto);
@@ -55,6 +56,13 @@ public class ReboardServiceImpl implements ReboardService{
 		return reboardDto;
 	}
 
+	@Override
+	@Transactional
+	public ReboardDto getArticle(int seq) {
+
+		return sqlSession.getMapper(ReboardDao.class).viewArticle(seq);
+	}
+
 	
 	@Override
 	public int modifyArticle(ReboardDto reboardDto) {
@@ -65,6 +73,20 @@ public class ReboardServiceImpl implements ReboardService{
 	@Override
 	public void deleteArticle(int seq) {
 		
+	}
+
+	// ---------------------------------------------------------------------------------
+	// [답글]
+	
+	@Override
+	@Transactional
+	public int replyArticle(ReboardDto reboardDto) {
+		ReboardDao reboardDao = sqlSession.getMapper(ReboardDao.class);
+		reboardDao.updateStep(reboardDto);
+		reboardDao.replyArticle(reboardDto);
+		reboardDao.updateReply(reboardDto.getPseq());
+		
+		return reboardDto.getSeq();
 	}
 
 }

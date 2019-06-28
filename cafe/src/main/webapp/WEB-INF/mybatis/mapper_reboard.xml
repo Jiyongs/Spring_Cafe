@@ -44,11 +44,32 @@
                         		and b.${key} = #{word} 
                         	</if>
                         </if>
-                        order by seq desc
+                        order by ref desc, step
                       ) total
             	where rownum &lt;= #{end} 
        		  ) c
 		where c.rn &gt; #{start}
 	</select>
+	
+	<update id="updateStep">
+		update reboard
+		set step = step + 1
+		where ref = #{ref}
+		and step > #{step}
+	</update>
 
+	<insert id="replyArticle">
+		insert all
+			into board (seq, id, name, email, subject, content, hit, logtime, bcode)
+			values(#{seq}, #{id}, #{name}, #{email}, #{subject}, #{content}, 0, sysdate, #{bcode})
+			into reboard (rseq, seq, ref, lev, step, pseq, reply)
+			values(reboard_rseq.nextval, #{seq}, #{ref}, #{lev} + 1, #{step} + 1, #{pseq}, 0)
+		select * from dual
+	</insert>
+	
+	<update id="updateReply">
+		update reboard
+		set reply = reply + 1
+		where seq = #{pseq}
+	</update>
 </mapper>

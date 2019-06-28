@@ -16,11 +16,6 @@ $(document).ready(function(){
 		
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/reboard/write").submit();
 	});
-
-	// 목록 보기 이벤트
-	$(".moveReplyBtn").click(function(){
-		
-	});
 	
 	// 작성 글 확인 이벤트
 	$(".viewBtn").click(function(){
@@ -152,6 +147,7 @@ $(document).ready(function(){
      
      </td-->
 		<td style="word-break: break-all;">
+			<img src="${root}/img/board/brank.gif" width="${article.lev * 15}" height="1">
 			<!-- ******************************************************글 제목에 태그 안 나오게 하기!!!************** -->
 			<label class="viewBtn" data-seq="${article.seq}">${article.subject.replace('<', '&lt;')}</label>
 		</td>

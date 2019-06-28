@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/commons/template/top.jsp" %> <!-- *** -->
+<%@ include file="/WEB-INF/views/commons/logincheck.jsp" %> <!-- *** -->
+<%@ include file="/WEB-INF/views/commons/board_common.jsp" %> <!-- *** -->
 
 <script>
 $(document).ready(function(){
 	$("#writeBtn").click(function(){
-		if($("#subject").val().trim() == "") {
+		if($("#subject").val() == "") {
 			alert("제목을 입력해주세요.");
 			return;
-		} else if ($("#content").val().trim() == "") {
+		} else if ($("#content").val() == "") {
 			alert("내용을 입력해주세요.");
 			return;
 		} else {

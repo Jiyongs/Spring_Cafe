@@ -113,6 +113,66 @@ public class ReboardController {
 		model.addAttribute("navigator", pageNavigation);
 	}
 	
+	// 답글쓰기 이동
+	@RequestMapping(value = "/reply", method = RequestMethod.GET)	// 단순 페이지 이동 (void 시, 클래스의 Mapping/메소드의Mapping으로 감)
+	public String reply(@RequestParam("seq") int seq,
+			@RequestParam Map<String, String> parameter,
+			Model model, HttpSession session) {
+		
+		String path="";
+		
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if(memberDto != null) {
+			
+			ReboardDto  reboardDto = reboardService.getArticle(seq);
+			
+			model.addAttribute("article", reboardDto);
+			model.addAttribute("parameter", parameter);
+			path="reboard/reply";
+		
+		} else {
+		
+			path="redirect:/index.jsp";
+		
+		}
+		
+		return path;
+	}
 	
+	// 답글쓰기
+	@RequestMapping(value = "/reply", method = RequestMethod.POST)
+	public String reply(ReboardDto reboardDto,
+						@RequestParam Map<String, String> parameter,
+						Model model, HttpSession session) {
+			
+		String path = "";
+			
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+			
+		if(memberDto != null) { // 로그인한 경우만 글 번호 얻음.
+				
+			int seq = commonService.getNextSeq();		// 다음 전체 글 번호 얻기
+			reboardDto.setSeq(seq);
+			reboardDto.setId(memberDto.getId());
+			reboardDto.setName(memberDto.getName());
+			reboardDto.setEmail(memberDto.getEmail());
+				
+			seq = reboardService.replyArticle(reboardDto);
+				
+			if(seq != 0) {
+					model.addAttribute("seq", seq);
+					path = "reboard/writeok";
+				} else {
+					path = "reboard/writefail";
+				}
+							
+			} else {
+				path = "";			
+			}
+			
+			model.addAttribute("parameter", parameter);
+			return path;	
+			
+		}
 	
 }

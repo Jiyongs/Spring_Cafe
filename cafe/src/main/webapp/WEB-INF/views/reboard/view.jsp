@@ -18,9 +18,14 @@ $(document).ready(function(){
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/reboard/write").submit();
 	});
 
-	// 목록 보기 이벤트
+	// 답글 달기 버튼 이벤트
 	$(".moveReplyBtn").click(function(){
-		
+		$("#bcode").val("${bcode}");
+		$("#pg").val("${pg}");
+		$("#key").val("${key}");
+		$("#word").val("${word}");
+		$("#seq").val("${article.seq}");
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/reboard/reply").submit();
 	});
 	
 	// 최신 목록 보기 이벤트 (1페이지)
@@ -64,6 +69,7 @@ $(document).ready(function(){
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/reboard/list").submit();
 	});
 	// TODO: 수정, 삭제 해보기####################################################
+
 
 });
 
