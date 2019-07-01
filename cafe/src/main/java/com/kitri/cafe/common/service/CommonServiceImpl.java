@@ -33,7 +33,7 @@ public class CommonServiceImpl implements CommonService {
 		int totalArticleCount =
 				sqlSession.getMapper(CommonDao.class).getTotalArticleCount(parameter);
 		int totalPageCount =
-				(totalArticleCount - 1) / (CafeConstance.ARTICLE_SIZE + 1);
+				(totalArticleCount - 1) / CafeConstance.ARTICLE_SIZE + 1;
 		int pg =
 				NumberCheck.NotNumberToOne(parameter.get("pg"));
 		// true : 이전 못 누름 | false : 이전 누름 가능

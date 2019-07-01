@@ -8,18 +8,18 @@ import com.kitri.cafe.board.model.MemoDto;
 public interface MemoDao {
 
 	// 글 쓰기
-	int writeArticle(MemoDto memoDto);
+	int writeMemo(MemoDto memoDto);
 
-	// 글 목록 | 인자1 : 원글 번호, 인자2: ...
-	List<MemoDto> listArticle(Map<String, String> pamameter);
+	// 댓글 목록 | 인자 : 원글 번호
+	List<MemoDto> listMemo(int seq);
 
 	// 글 보기 | 인자 : 글 번호
-	//MemoDto viewArticle(int seq);
+	MemoDto viewMemo(int seq);
 
 	// 글 수정
-	int modifyArticle(MemoDto memoDto);
+	void modifyMemo(MemoDto memoDto);
 
 	// 글 삭제 | 인자 : 댓글 번호
-	void deleteArticle(int seq);
+	void deleteMemo(int mseq);
 
 }

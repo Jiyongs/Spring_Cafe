@@ -64,7 +64,9 @@ public class ReboardController {
 			}
 						
 		} else {
-			path = "";			
+			path = "";	
+			// TODO 에러처리 참고!
+			//model.addAttribute("error", "~에러가 났습니다.");
 		}
 		
 		model.addAttribute("parameter", parameter);

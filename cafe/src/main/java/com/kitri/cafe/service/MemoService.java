@@ -11,13 +11,13 @@ public interface MemoService {
 	// 글 쓰기
 	void writeMemo(MemoDto memoDto);
 
-	// 글 목록 | 인자1 : 원글 번호, 인자2: ...
-	List<MemoDto> listMemo(Map<String, String> pamameter);
+	// 댓글 목록 | 인자1 : 댓글 번호
+	String listMemo(int seq);
 
 	// 글 수정
-	void modifyMemo(MemoDto memoDto);
+	String modifyMemo(int seq, int mseq, String mcontent);
 
 	// 글 삭제 | 인자 : 댓글 번호
-	void deleteMemo(int mseq);
+	String deleteMemo(int seq, int mseq);
 
 }
