@@ -1,6 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/commons/template/top.jsp" %> <!-- *** -->
+<%@ include file="/WEB-INF/views/commons/board_common.jsp" %> <!-- *** -->
+
+<c:if test="${errorMsg != null}">
+<script>
+	alert("${errorMsg}");
+	document.location.href="${root}/index.jsp";
+</script>
+</c:if>
+
+<script>
+
+$(document).ready(function(){
+	
+	// 작성 글 확인 이벤트
+	$("#viewBtn").click(function(){
+		$("#bcode").val("${bcode}");
+		$("#pg").val("${pg}");
+		$("#key").val("${key}");
+		$("#word").val("${word}");
+		$("#seq").val("${seq}");
+		
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/reboard/view").submit();
+	});
+
+	// 목록 보기 이벤트
+	$("#listBtn").click(function(){
+		$("#bcode").val("${bcode}");
+		$("#pg").val("1");
+		$("#key").val("");
+		$("#word").val("");
+		
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/reboard/list").submit();
+	});
+	
+	
+});
+
+</script>
 
 <table width="100%" cellpadding="6" cellspacing="2" border="0"
 	bgcolor="#ffffff" style="border: #e1e1e1 solid 1px">
@@ -19,12 +57,14 @@
 			align="center"><b>게시물이 등록되었습니다.</b><br>
 		<br>
 
-		<div align="center"><a href=""><img
-			src="${root}/img/board/b_wirtecf.gif" width="91" height="21"
-			border="0" align="absmiddle" alt="작성한 글 확인" hspace="10"></a><a
-			href=""><img src="${root}/img/board/poll_listbu1.gif"
+		<div align="center">
+		<img
+			src="${root}/img/board/b_wirtecf.gif" id="viewBtn"
+			width="91" height="21" border="0" align="absmiddle" alt="작성한 글 확인" hspace="10">
+
+		<img src="${root}/img/board/poll_listbu1.gif" id="listBtn"
 			width="62" height="21" border="0" align="absmiddle" alt="목록보기"
-			hspace="10"></a>
+			hspace="10">
 		</td>
 	</tr>
 </table>

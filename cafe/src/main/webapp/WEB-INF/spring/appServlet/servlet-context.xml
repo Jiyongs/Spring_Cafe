@@ -34,6 +34,12 @@
 	<mvc:resources mapping="/img/**" location="/resources/img/" /> 			<!--********-->
 	<mvc:resources mapping="/js/**" location="/resources/js/board/" />  	<!--********-->
 
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+		<beans:property name="maxInMemorySize" value="1048576"/>
+		<beans:property name="maxUploadSize" value="5242880"/>
+	</beans:bean>
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" /> 		<!--********-->

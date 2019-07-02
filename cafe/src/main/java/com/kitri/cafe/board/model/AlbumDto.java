@@ -6,8 +6,8 @@ public class AlbumDto extends BoardDto {
 	private String orignPicture;
 	private String savePicture;
 	private String saveFolder;
-	private int type;
-	
+	private int type;	// 사진의 가로, 세로 여부
+		
 	// 글 하나당, 사진이 여러개라면 이렇게 처리!
 	// private List<String> orignPicture;
 	

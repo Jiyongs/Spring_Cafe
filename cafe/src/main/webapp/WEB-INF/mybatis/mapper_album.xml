@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kitri.cafe.board.dao.AlbumDao">	<!-- mapper라는 루트 엘리먼트가 꼭 들어가야 에러가 안 남 -->
+
+	<insert id="writeArticle" parameterType="albumDto">
+		insert all
+			into board (seq, id, name, email, subject, content, hit, logtime, bcode)
+			values(#{seq}, #{id}, #{name}, #{email}, #{subject}, #{content}, 0, sysdate, #{bcode})
+			into album (aseq, seq, orign_picture, save_picture, savefolder, type)
+			values(album_aseq.nextval, #{seq}, #{orignPicture}, #{savePicture}, #{saveFolder}, 0)
+		select * from dual
+	</insert>
+	
+	<select id="viewArticle" parameterType="int" resultType="albumDto">
+		select b.seq, b.id, b.name, b.email, b.subject, b.content, b.hit, b.logtime, b.bcode,
+				a.aseq, a.orign_picture originPicture, a.save_picture savePicture, a.savefolder saveFolder, a.type
+		from board b, album a
+		where b.seq = a.seq
+		and b.seq = #{seq}	
+	</select>
+	
+	<select id="listArticle" parameterType="map" resultType="albumDto">
+		select c.seq, c.name, c.id, c.email, c.subject, c.content, c.hit, 
+         		decode(to_char(c.logtime, 'yymmdd'),
+                   	   to_char(sysdate, 'yymmdd'), to_char(c.logtime, 'hh24:mi:ss'),
+                       to_char(c.logtime, 'yy.mm.dd')) logtime
+         	    , c.aseq, c.orign_picture originPicture, c.save_picture savePicture, c.savefolder saveFolder, c.type
+		from (
+				select rownum rn, total.*
+            	from (
+            			select b.seq, b.name, b.id, b.email, b.subject, b.content, b.hit, b.logtime, b.bcode,
+            			c.aseq, c.orign_picture originPicture, c.save_picture savePicture, c.savefolder saveFolder, c.type
+                        from board b, album a
+                        where b.seq = a.seq
+                        and b.bcode=#{bcode}
+                        <if test="word != null and word != ''">
+                        	<if test="key == 'subject'">
+                        		and b.subject like '%'||#{word}||'%' 
+                        	</if>
+                        	<if test="key != 'subject'">
+                        		and b.${key} = #{word} 
+                        	</if>
+                        </if>
+                        order by b.seq desc
+                      ) total
+            	where rownum &lt;= #{end} 
+       		  ) c
+		where c.rn &gt; #{start}
+	</select>
+	
+</mapper>
