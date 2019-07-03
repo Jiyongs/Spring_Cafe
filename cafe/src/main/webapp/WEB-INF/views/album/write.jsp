@@ -18,7 +18,7 @@ $(document).ready(function(){
 	});
 });
 </script>
-
+<img class="test" src = "${root}/upload/album/190702/44a7669f-9f03-4640-b3fc-5b2c2b1f9d5e.jpg">
 <!-- title -->
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
